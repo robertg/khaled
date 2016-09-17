@@ -15,13 +15,12 @@ import re
 import random
 from pydub import AudioSegment
 
-
 def convert_to_wav(files):
     '''Converts files to a format that pocketsphinx can deal wtih (16khz mono 16bit wav)'''
     converted = []
     for f in files:
         new_name = f + '.temp.wav'
-        print new_name 
+        print new_name
         if (os.path.exists(f + '.transcription.txt') is False) and (os.path.exists(new_name) is False):
             subprocess.call(['ffmpeg', '-y', '-i', f, '-acodec', 'pcm_s16le', '-ac', '1', '-ar', '16000', new_name])
         converted.append(new_name)
@@ -59,7 +58,7 @@ def words_json(sentences):
             except:
                 continue
     return json.dumps(out)
-    
+
 
 
 def convert_timestamps(files):
@@ -248,7 +247,7 @@ def word_search(query, sentences, regex):
                 except:
                     continue
     return out
-    
+
 
 def sentence_search(query, sentences, regex):
     out = []
