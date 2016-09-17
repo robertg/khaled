@@ -1,12 +1,12 @@
-Audiogrep
+Khaled
 =========
 
-Audiogrep transcribes audio files and then creates "audio supercuts" based on search phrases. It uses [CMU Pocketsphinx](http://cmusphinx.sourceforge.net/) for speech-to-text and [pydub](http://pydub.com/) to stitch things together.
+Forked from [https://github.com/antiboredom/audiogrep](antiboredom/audiogrep).
 
-Here's some [sample output](http://lav.io/2015/02/audiogrep-automatic-audio-supercuts/).
-
-##Requirements
+## Setting up audiogrep
+### Requirements
 Install using pip
+
 ```
 pip install audiogrep
 ```
@@ -22,6 +22,47 @@ brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxbase
 brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxtrain # optional
 brew install --HEAD watsonbox/cmu-sphinx/cmu-pocketsphinx
 ```
+
+## Setting up khaled
+
+~ How do I use it?
+
+  1. edit the configuration in the flaskr.py file or
+     export an KHALED_SETTINGS environment variable
+     pointing to a configuration file.
+
+  2. install the app from the root of the project directory
+
+     pip install --editable .
+
+  3. Instruct flask to use the right application
+
+     export FLASK_APP=khaled
+
+  4. initialize the database with this command:
+
+     flask initdb
+
+  5. now you can run khaled:
+
+     flask run
+
+     the application will greet you on
+     http://localhost:5000/
+
+~ Is it tested?
+
+  You betcha.  Run `python setup.py test` to see
+  the tests pass.
+
+
+Audiogrep
+=========
+
+Audiogrep transcribes audio files and then creates "audio supercuts" based on search phrases. It uses [CMU Pocketsphinx](http://cmusphinx.sourceforge.net/) for speech-to-text and [pydub](http://pydub.com/) to stitch things together.
+
+Here's some [sample output](http://lav.io/2015/02/audiogrep-automatic-audio-supercuts/).
+
 
 ##How to use it
 First, transcribe the audio (you'll only need to do this once per audio track, but it can take some time)
