@@ -9,7 +9,8 @@
     "react": "^15.3.1",
     "react-audio-recorder": "^0.1.0",
     "react-dom": "^15.3.1",
-    "react-webcam": "0.0.14"
+    "react-webcam": "0.0.14",
+    "whatwg-fetch": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -10,9 +10,21 @@ class App extends Component {
     done: false,
   };
 
-  handleChangeAudio = (duration, data) => {
+  handleChangeAudio = (result) => {
+    console.log('yo', result);
+    result.blob.lastModifiedDate = new Date();
+    result.blob.name = 'test.wav';
     this.setState({done: !this.state.done});
-    console.log('yo', duration, data);
+
+
+    fetch('/soundchat', {
+      method: 'PUT',
+      headers: {
+        'Accept': 'audio/wav',
+        'Content-Type': 'audio/wav'
+      },
+      body: result.blob
+    })
   };
 
   renderFilters() {

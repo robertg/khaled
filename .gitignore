@@ -21,3 +21,5 @@ khaled/upload/*.wav
 data/supercut*
 output.mp3
 node_modules/
+*.log
+*.pid
