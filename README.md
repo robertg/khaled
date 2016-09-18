@@ -39,11 +39,13 @@ brew install --HEAD watsonbox/cmu-sphinx/cmu-pocketsphinx
 
      export FLASK_APP=khaled
 
-  4. initialize the database with this command:
+  6. `brew install postgresql`
 
-     flask initdb
+  7. [Install Cockroach DB](https://www.cockroachlabs.com/docs/install-cockroachdb.html), and [run a multi-node cluster](https://www.cockroachlabs.com/docs/start-a-local-cluster.html). Don't run the sample SQL commands.
 
-  5. now you can run khaled:
+  8. Setup the database: `bash setup-database.sh` (Make sure `cockroach` is in the path)
+
+  8. now you can run khaled:
 
      flask run
 

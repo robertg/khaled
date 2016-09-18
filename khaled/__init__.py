@@ -1,1 +1,1 @@
-from khaled import app
+from khaled import *
