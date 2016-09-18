@@ -9,11 +9,13 @@
 
 import sys
 import os
+import json
 import subprocess
 import argparse
 import re
 import random
 from pydub import AudioSegment
+from watson_developer_cloud import SpeechToTextV1
 
 def convert_to_wav(files):
     '''Converts files to a format that pocketsphinx can deal wtih (16khz mono 16bit wav)'''
@@ -72,7 +74,7 @@ def convert_timestamps(files):
             f = f + '.transcription.txt'
 
         if os.path.exists(f) is False:
-            continue
+            raise Exception('Transcript file not found!')
 
         with open(f, 'r') as infile:
             lines = infile.readlines()
@@ -355,6 +357,37 @@ def compose(segments, out='out.mp3', padding=0, crossfade=0, layer=False):
     audio.export(out, format=os.path.splitext(out)[1].replace('.', ''))
     return working_segments
 
+def transcribeAudio(audiofile):
+
+    speech_to_text = SpeechToTextV1(
+        username='7ece3e94-dce6-4cb3-832a-6abb633f56bb',
+        password='S66A7IbYbVh4',
+        x_watson_learning_opt_out=False
+    )
+
+    with open(audiofile, 'rb') as audio:
+         return speech_to_text.recognize(
+            audio, content_type='audio/wav', timestamps=True)['results'][0]['alternatives'][0]['timestamps']
+
+def get_soundchat(transcription, audiofile):
+    outputfile = './data/supercut+'
+    def create_soundbite(word, outputfile):
+        segments = franken_sentence(word, ['./data/snapchat_1.mp3'])
+
+        if len(segments) == 0:
+            return False
+        compose(segments, out=outputfile+word+'.mp3', padding=50, crossfade=0, layer=False)
+        return True
+    # start transcription here
+    audio_object = AudioSegment.from_file(audiofile, format="wav")
+    result = AudioSegment.silent(len(audio_object))
+
+    for track in transcription:
+        if create_soundbite(track[0], outputfile):
+            sound = AudioSegment.from_file(outputfile+track[0]+'.mp3', format="mp3")
+            result = result.overlay(sound, position=track[1]*1000)
+
+    result.export('/Users/Femi/Downloads/silence.mp3', format='mp3')
 
 def main():
     parser = argparse.ArgumentParser(description='Audiogrep: splice together audio based on search phrases')
