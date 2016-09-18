@@ -41,7 +41,7 @@ brew install --HEAD watsonbox/cmu-sphinx/cmu-pocketsphinx
 
   6. `brew install postgresql`
 
-  7. [https://www.cockroachlabs.com/docs/install-cockroachdb.html](Install Cockroach DB), and [run a multi-node cluster](https://www.cockroachlabs.com/docs/start-a-local-cluster.html). Don't run the sample SQL commands.
+  7. [Install Cockroach DB](https://www.cockroachlabs.com/docs/install-cockroachdb.html), and [run a multi-node cluster](https://www.cockroachlabs.com/docs/start-a-local-cluster.html). Don't run the sample SQL commands.
 
   8. Setup the database: `bash setup-database.sh` (Make sure `cockroach` is in the path)
 
