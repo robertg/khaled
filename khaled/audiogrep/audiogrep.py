@@ -357,7 +357,7 @@ def compose(segments, out='out.mp3', padding=0, crossfade=0, layer=False):
     audio.export(out, format=os.path.splitext(out)[1].replace('.', ''))
     return working_segments
 
-def transcribeAudio(audiofile):
+def transcribe_audio(app, audiofile):
 
     speech_to_text = SpeechToTextV1(
         username='7ece3e94-dce6-4cb3-832a-6abb633f56bb',
@@ -369,10 +369,10 @@ def transcribeAudio(audiofile):
          return speech_to_text.recognize(
             audio, content_type='audio/wav', timestamps=True)['results'][0]['alternatives'][0]['timestamps']
 
-def get_soundchat(transcription, audiofile):
-    outputfile = './data/supercut+'
+def get_soundchat(app, transcription, audiofile):
+    outputfile = app.root_path + '/../data/supercut+'
     def create_soundbite(word, outputfile):
-        segments = franken_sentence(word, ['./data/snapchat_1.mp3'])
+        segments = franken_sentence(word, [app.root_path + '/../data/snapchat_1.mp3'])
 
         if len(segments) == 0:
             return False
@@ -387,7 +387,7 @@ def get_soundchat(transcription, audiofile):
             sound = AudioSegment.from_file(outputfile+track[0]+'.mp3', format="mp3")
             result = result.overlay(sound, position=track[1]*1000)
 
-    result.export('/Users/Femi/Downloads/silence.mp3', format='mp3')
+    return result
 
 def main():
     parser = argparse.ArgumentParser(description='Audiogrep: splice together audio based on search phrases')
