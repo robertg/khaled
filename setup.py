@@ -7,7 +7,7 @@ setup(
     packages=['khaled'],
     license='LICENSE',
     long_description=open('README.md').read(),
-    install_requires=['pydub', 'flask', 'psycopg2', 'Flask-SQLAlchemy', 'cockroachdb'],
+    install_requires=['pydub', 'flask', 'psycopg2', 'Flask-SQLAlchemy', 'cockroachdb','watson_developer_cloud'],
     setup_requires=[
         'pytest-runner',
     ],
