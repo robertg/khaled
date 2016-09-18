@@ -16,3 +16,7 @@ env/
 dist/
 .eggs/
 khaled/khaled.db
+khaled/upload/*.mp3
+khaled/upload/*.wav
+data/supercut*
+output.mp3

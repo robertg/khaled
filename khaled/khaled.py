@@ -15,8 +15,10 @@ from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy.orm
 from cockroachdb.sqlalchemy import run_transaction
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+     render_template, flash, Response, send_file
 import audiogrep
+import random
+import string
 
 
 app = Flask(__name__)
@@ -47,6 +49,27 @@ def show_entries():
         entries = session.query(Entry).all()
         return render_template('show_entries.html', entries=entries)
     return run_transaction(sessionmaker, callback)
+
+@app.route('/soundchat', methods=['PUT'])
+def soundchat():
+    if not request.headers['Content-Type'] == 'audio/wav':
+        return Response(response='Wrong Content-Type', status=400, mimetype="application/json")
+
+    base =  ''.join([random.choice(string.digits) for i in xrange(8)])
+    filename_in = app.root_path + '/upload/%s.wav' % base
+    filename_out = app.root_path + '/upload/%s.mp3' % base
+
+    f = open(filename_in, 'wb')
+    f.write(request.get_data())
+    f.close()
+
+    transcription = audiogrep.transcribe_audio(app, filename_in)
+    audio = audiogrep.get_soundchat(app, transcription, filename_in)
+    audio.export(filename_out, format='mp3')
+    return send_file(filename_out, attachment_filename='output.mp3')
+
+
+    return Response(response=dat, status=200, mimetype="audio/wav")
 
 @app.route('/add', methods=['POST'])
 def add_entry():
